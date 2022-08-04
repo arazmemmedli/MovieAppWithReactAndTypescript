@@ -58,9 +58,9 @@ export function UseAuth({ children }: Props) {
         let ld = localStorage.getItem("users");
         if (ld !== null) {
             const ud: IRegister[] = JSON.parse(ld);
-            let initialUser = ud.find((w) => w.email === authTokens.email && w.username === authTokens.username);
+            let initialUser = ud.find((w) => w.userId === authTokens.userId);
             initialUser = data;
-            let allUsers = ud.filter((u) => u.email !== authTokens.email);
+            let allUsers = ud.filter((u) => u.userId !== authTokens.userId);
             allUsers.push(initialUser);
             localStorage.setItem("users", JSON.stringify(allUsers))
             sessionStorage.setItem("tokens", JSON.stringify(data));
@@ -100,9 +100,9 @@ export function UseAuth({ children }: Props) {
             const ld = localStorage.getItem("users");
             if (ld !== null) {
                 const ud: IRegister[] = JSON.parse(ld);
-                let initialUser = ud.find((w) => w.email === authTokens.email && w.username === authTokens.username);
+                let initialUser = ud.find((w) => w.userId === authTokens.userId);
                 initialUser = data;
-                let allUsers = ud.filter((u) => u.email !== authTokens.email);
+                let allUsers = ud.filter((u) => u.userId !== authTokens.userId);
                 allUsers.push(initialUser);
                 localStorage.setItem("users", JSON.stringify(allUsers))
                 sessionStorage.setItem("tokens", JSON.stringify(data));
@@ -123,7 +123,7 @@ export function UseAuth({ children }: Props) {
         if (localData && localFavouritesData) {
             let users: IRegister[] = JSON.parse(localData);
             let favourites: IFavourites[] = JSON.parse(localFavouritesData);
-            const removeUser = users.filter((u) => u.email !== authTokens.email && u.username !== authTokens.username);
+            const removeUser = users.filter((u) => u.userId !== authTokens.userId);
             sessionStorage.removeItem("tokens");
             const removeFavourites = favourites.filter((f) => f.userId !== authTokens.userId)
             users = removeUser;
