@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { useForm } from '../hooks/useForm';
@@ -45,6 +45,7 @@ const initialState: IInitialState = {
 export const SignUp = () => {
     const [error, setError] = useState('');
     const { formData, errors, changeHandler, setErrors } = useForm(initialState, validate);
+    const [success, setSuccess] = useState<boolean>(false);
 
     const submitHandler = (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -73,6 +74,7 @@ export const SignUp = () => {
                 formData.email.value = "";
                 formData.password.value = "";
                 formData.confirmPassword.value = "";
+                setSuccess(true)
             } else {
                 let users: IRegister[] = JSON.parse(ld);
                 let checkUser = users.filter((w) => w.username === user.username && w.email === user.email);
@@ -86,6 +88,7 @@ export const SignUp = () => {
                     formData.email.value = "";
                     formData.password.value = "";
                     formData.confirmPassword.value = "";
+                    setSuccess(true);
                 } else {
                     setError("There is an account matching this username and email!");
                 }
@@ -97,24 +100,37 @@ export const SignUp = () => {
         <div className="flex login_bg items-center justify-center relative bg-cover bg-center bg-no-repeat w-full min-h-[100vh]">
             <div className="flex max-w-sm w-full flex-col items-center bg-white p-4 border border-solid border-gray-primary rounded mb-4">
                 {error && <p className="mb-4 text-xs text-red-500">{error}</p>}
-                <div className="w-full block mb-4">
-                    <form method="POST" onSubmit={submitHandler}>
-                        <Input aria-label="Enter your name" type="text" value={formData.yourname.value} onChange={changeHandler} error={errors.yourname} label="Yourname" name="yourname" id="yourname" placeholder="Your name" />
-                        <Input aria-label="Enter your surname" type="text" value={formData.surname.value} onChange={changeHandler} error={errors.surname} label="Surname" name="surname" id="surname" placeholder="Surname" />
-                        <Input aria-label="Enter your username" type="text" value={formData.username.value} onChange={changeHandler} error={errors.username} label="Username" name="username" id="username" placeholder="Username" />
-                        <Input aria-label="Enter your email address" type="email" value={formData.email.value} onChange={changeHandler} error={errors.email} label="Email Address" name="email" id="email" placeholder="Email address" />
-                        <Input aria-label="Enter your password" type="password" value={formData.password.value} onChange={changeHandler} error={errors.password} label="Password" name="password" id="password" placeholder="Password" />
-                        <Input aria-label="Enter your confirm password" type="password" value={formData.confirmPassword.value} onChange={changeHandler} error={errors.confirmPassword} label="Confirm Password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" />
-                        <button type="submit" className={`bg-[#1a191f] text-white w-full rounded h-8 font-bold`}>Sign Up</button>
-                    </form>
+                <div className={`w-full ${success !== true ? "block" : "hidden"}`}>
+                    <div className="w-full block mb-4">
+                        <form method="POST" onSubmit={submitHandler}>
+                            <Input aria-label="Enter your name" type="text" value={formData.yourname.value} onChange={changeHandler} error={errors.yourname} label="Yourname" name="yourname" id="yourname" placeholder="Your name" />
+                            <Input aria-label="Enter your surname" type="text" value={formData.surname.value} onChange={changeHandler} error={errors.surname} label="Surname" name="surname" id="surname" placeholder="Surname" />
+                            <Input aria-label="Enter your username" type="text" value={formData.username.value} onChange={changeHandler} error={errors.username} label="Username" name="username" id="username" placeholder="Username" />
+                            <Input aria-label="Enter your email address" type="email" value={formData.email.value} onChange={changeHandler} error={errors.email} label="Email Address" name="email" id="email" placeholder="Email address" />
+                            <Input aria-label="Enter your password" type="password" value={formData.password.value} onChange={changeHandler} error={errors.password} label="Password" name="password" id="password" placeholder="Password" />
+                            <Input aria-label="Enter your confirm password" type="password" value={formData.confirmPassword.value} onChange={changeHandler} error={errors.confirmPassword} label="Confirm Password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" />
+                            <button type="submit" className={`bg-[#1a191f] text-white w-full rounded h-8 font-bold`}>Sign Up</button>
+                        </form>
+                    </div>
+                    <div className="flex justify-center items-center flex-col w-full rounded bg-white p-4 border border-solid border-gray-primary">
+                        <p className="text-sm">
+                            Have an account?{` `}
+                            <Link to="/account" className="font-bold text-gray-500">Login</Link>
+                        </p>
+                    </div>
                 </div>
-                <div className="flex justify-center items-center flex-col w-full rounded bg-white p-4 border border-solid border-gray-primary">
+                <div className={`w-full ${success === true ? "flex" : "hidden"} justify-center flex-col items-center p-10 text-center gap-3`}>
+                    <svg viewBox="0 0 76 76" className="max-w-[80px] icon-checkmark">
+                        <circle fill='#3DC480' cx="38" cy="38" r="36" />
+                        <path fill="none" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" d="M17.7,40.9l10.9,10.9l28.7-28.7" />
+                    </svg>
+                    <span className='text-sm font-normal text-[#333]'>Your registration has been completed successfully</span>
                     <p className="text-sm">
-                        Have an account?{` `}
-                        <Link to="/account" className="font-bold text-gray-500">Login</Link>
+                        Go to the login page{` `}
+                        <Link to="/account" className="font-bold text-gray-600">Login</Link>
                     </p>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

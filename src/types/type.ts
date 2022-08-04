@@ -44,7 +44,7 @@ export interface IContext {
 }
 
 export interface IFavourites {
-    userId:string;
+    userId: string;
     favourites: IMovie[]
 }
 
@@ -55,7 +55,7 @@ export interface IRegister {
     email: string;
     password: string;
     confirmPassword: string;
-    userId:string;
+    userId: string;
 }
 
 export interface IInitialState {

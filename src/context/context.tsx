@@ -11,7 +11,7 @@ export const MoviesProvider = ({ children }: { children: any }) => {
     const prevController = useRef<any>(null);
     const [favourites, setFavourites] = useState<IFavourites[]>([]);
     const [searchDatas, setSearchDatas] = useState<IMovie[]>([])
-    const { authTokens } = useContext(AuthContext) as IToken
+    const { authTokens } = useContext(AuthContext) as IToken;
 
     const SearchMovies = async (isInfinity = false, { page = 1 } = {}) => {
         if (searchValue.trim() === "") {

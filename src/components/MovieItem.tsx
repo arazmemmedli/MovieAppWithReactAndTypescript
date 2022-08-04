@@ -13,6 +13,7 @@ const MovieItem = ({ movie }: IItemProps) => {
     const { addFavourites } = useContext(MoviesContext) as IContext;
     const { authTokens } = useContext(AuthContext) as IToken;
     const navigate = useNavigate();
+    const [favouriteCheck, setFavouriteCheck] = useState(false)
 
     return (
         <div className="group relative md:m-2">
@@ -23,12 +24,13 @@ const MovieItem = ({ movie }: IItemProps) => {
                 />
                 <div onClick={() => {
                     if (authTokens !== null) {
-                        addFavourites(movie)
+                        addFavourites(movie);
+                        setFavouriteCheck(true)
                     } else {
                         navigate("/account")
                     }
                 }} className="absolute bg-[rgba(0,0,0,.8)] w-full cursor-pointer group-hover:opacity-100 opacity-0 transition-opacity duration-300 bottom-0 p-5 text-center flex items-center justify-center">
-                    <AddFavourite />
+                    <AddFavourite check={favouriteCheck} />
                 </div>
             </div>
             <h3 className="mt-3">
