@@ -1,0 +1,45 @@
+body {
+  overflow-x: hidden;
+  background-color: #1a191f;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+
+  .wrapper {
+    margin-top: 20px !important
+  }
+
+  /* Chrome, Safari and Opera */
+  .row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .row {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}
+
+.login_bg {
+  background-image: url("../public/images/felix-mooneeram-evlkOfkQ5rE-unsplash.jpg");
+}
+
+.profile_bg {
+  background-image: url("../public/images/section.jpg");
+}
